@@ -45,3 +45,98 @@ $$
 
 Định lý Euler là cơ sở của hệ thống mã hóa RSA, được sử dụng rộng rãi trong các giao tiếp Internet. Trong hệ thống này, \( n \) là một tích của hai số nguyên tố lớn, và sự an toàn của hệ thống dựa vào độ khó trong việc phân tích số nguyên này.
 
+# Phương Pháp Bình Phương Lặp
+Phương pháp bình phương lặp lại là một kỹ thuật toán học được sử dụng để tính nhanh lũy thừa của một số. Nó hoạt động bằng cách liên tục bình phương một số rồi nhân kết quả với số ban đầu. Quá trình này được lặp lại cho đến khi đạt được công suất mong muốn. Phương pháp này đặc biệt hữu ích khi xử lý số lượng lớn, vì nó có thể được thực hiện nhanh hơn nhiều so với các phương pháp truyền thống. Nó cũng hữu ích để tính lũy thừa của các số không phải là số nguyên, chẳng hạn như phân số hoặc số vô tỷ.
+
+## Nguyên Tắc
+
+Phép lũy thừa có thể được phân tích thành các phép nhân đơn giản hơn bằng cách sử dụng thuộc tính của lũy thừa:
+
+- Nếu \( b \) là số chẵn:
+  \[
+  a^b = (a^{b/2})^2
+  \]
+
+- Nếu \( b \) là số lẻ:
+  \[
+  a^b = a \cdot a^{b-1}
+  \]
+
+## Quy Trình
+
+1. Khởi tạo `result` bằng 1 (bởi vì bất kỳ số nào mũ 0 đều bằng 1).
+2. Trong khi \( b > 0 \):
+   - Nếu \( b \) là số lẻ, nhân `result` với `base` và lấy modulo \( n \).
+   - Luôn bình phương `base` và lấy modulo \( n \).
+   - Chia \( b \) cho 2 để cập nhật số mũ.
+3. Khi \( b \) bằng 0, `result` sẽ chứa giá trị của \( (a^b) \mod n \).
+
+
+Giả sử chúng ta muốn tính \( 3^{13} \mod 7 \).
+
+### Tham số đầu vào
+- \( a = 3 \)
+- \( b = 13 \)
+- \( n = 7 \)
+
+### Bước 1: Khởi tạo giá trị
+- Kết quả (result) ban đầu được khởi tạo bằng 1.
+- Base (base) sẽ được khởi tạo bằng \( a \) (3).
+- Exponent (exp) sẽ được khởi tạo bằng \( b \) (13).
+- Mod (mod) sẽ được khởi tạo bằng \( n \) (7).
+
+### Bước 2: Thực hiện các phép toán
+Chúng ta sẽ theo dõi từng bước trong vòng lặp của hàm `modular_exponentiation`.
+
+#### Vòng lặp đầu tiên:
+- `exp = 13` (lẻ), nên ta thực hiện:
+  - \( \text{result} = 1 \cdot 3 = 3 \)
+  - \( \text{result} \mod 7 = 3 \)
+
+- Cập nhật base:
+  - \( \text{base} = 3^2 = 9 \)
+  - \( 9 \mod 7 = 2 \)
+
+- Cập nhật exp:
+  - \( \text{exp} = \frac{13}{2} = 6 \)
+
+#### Vòng lặp thứ hai:
+- `exp = 6` (chẵn), không thay đổi `result`.
+  
+- Cập nhật base:
+  - \( \text{base} = 2^2 = 4 \)
+  - \( 4 \mod 7 = 4 \)
+
+- Cập nhật exp:
+  - \( \text{exp} = \frac{6}{2} = 3 \)
+
+#### Vòng lặp thứ ba:
+- `exp = 3` (lẻ), thực hiện:
+  - \( \text{result} = 3 \cdot 4 = 12 \)
+  - \( 12 \mod 7 = 5 \)
+
+- Cập nhật base:
+  - \( \text{base} = 4^2 = 16 \)
+  - \( 16 \mod 7 = 2 \)
+
+- Cập nhật exp:
+  - \( \text{exp} = \frac{3}{2} = 1 \)
+
+#### Vòng lặp thứ tư:
+- `exp = 1` (lẻ), thực hiện:
+  - \( \text{result} = 5 \cdot 2 = 10 \)
+  - \( 10 \mod 7 = 3 \)
+
+- Cập nhật base:
+  - \( \text{base} = 2^2 = 4 \)
+  - \( 4 \mod 7 = 4 \)
+
+- Cập nhật exp:
+  - \( \text{exp} = \frac{1}{2} = 0 \)
+
+### Kết quả
+Khi `exp = 0`, vòng lặp kết thúc. Giá trị cuối cùng của `result` là 3. Do đó, 
+
+\[
+3^{13} \mod 7 = 3.
+\]
