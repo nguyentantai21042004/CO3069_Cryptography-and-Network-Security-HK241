@@ -102,7 +102,10 @@
     "numbers": "cpp",
     "stdexcept": "cpp",
     "streambuf": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "ctime": "cpp",
+    "ratio": "cpp",
+    "chrono": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
