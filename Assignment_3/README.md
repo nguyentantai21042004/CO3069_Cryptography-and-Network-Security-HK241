@@ -30,6 +30,8 @@ Sau khi seed đã được thiết lập, bạn có thể gọi std::rand() đ�
 
 Sự Quan Trọng Của Seed
 
+Thay vì dùng std::time(nullptr), bạn sử dụng std::chrono::system_clock::now().time_since_epoch().count() để tạo ra một giá trị seed chính xác hơn. Điều này giúp đảm bảo rằng nếu chương trình chạy nhiều lần trong một giây, mỗi lần chạy sẽ có giá trị seed khác nhau.
+
 - Tính Ngẫu Nhiên: Nếu bạn muốn có những số ngẫu nhiên khác nhau trong mỗi lần chạy chương trình, việc sử dụng thời gian hiện tại (như std::time(nullptr)) là một cách thông dụng để tạo ra một seed duy nhất.
 - Tái Tạo: Trong một số trường hợp, bạn có thể muốn sinh ra cùng một chuỗi số ngẫu nhiên nhiều lần để phục vụ cho việc kiểm tra hoặc mô phỏng. Khi đó, bạn có thể sử dụng cùng một giá trị seed.
 
@@ -64,6 +66,8 @@ Sau khi vượt qua kiểm tra Fermat, thuật toán Miller-Rabin sẽ được 
 Chương trình được thiết kế để chạy đồng thời qua nhiều luồng, mỗi luồng sẽ tìm kiếm số nguyên tố độc lập. Biến toàn cục found và mutex mtx được sử dụng để quản lý truy cập vào số nguyên tố tìm được, đảm bảo rằng không có luồng nào ghi đè lên giá trị đã được tìm thấy.
 
 # **2\. Tính ước số chung lớn nhất (GCD)**
+
+
 
 # **3.** **Tính khóa giải mã d**
 
