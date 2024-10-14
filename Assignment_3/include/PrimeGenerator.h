@@ -6,13 +6,14 @@
 #include <chrono>
 #include <mutex> // For thread synchronization
 #include <atomic> // For atomic boolean flag
+#include <shared_mutex> 
 
 // Atomic flag to indicate if a prime number has been found
 extern std::atomic<bool> found;
 // Global variable to store the found prime number
 extern mpz_class big_prime_integer;
 // Mutex to prevent race conditions when accessing the global prime number
-extern std::mutex mtx;
+extern std::shared_mutex mtx;
 
 // Generates a random large integer of specified bit length
 mpz_class Generate_Big_Integer(int bit_length);

@@ -1,0 +1,32 @@
+package _0.Assignment4.src;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+public class LDAPAuthenticationController {
+
+    @Autowired
+    private LDAPService ldapService;
+
+    @GetMapping("/")
+    public String index() {
+        return "Welcome to the home page!";
+    }
+
+    @GetMapping("/getUserDetails")
+    public String getUserDetails(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        // access user details
+        String userName = userDetails.getUsername();
+        boolean accNonExpired = userDetails.isAccountNonExpired();
+        return "UserDetails: " + userName + "\n Account Non Expired: " + accNonExpired;
+    }
+}

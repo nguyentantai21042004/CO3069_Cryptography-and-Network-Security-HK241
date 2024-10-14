@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form th:action="@{/addUser}" th:object="${ldapUser}" method="post">
+        <label>Username: <input type="text" th:field="*{username}"> </label><br/>
+        <label>Password: <input type="password" th:field="*{password}"> </label><br/>
+        <label>Common Name: <input type="text" th:field="*{cn}"> </label><br/>
+        <label>Surname Name: <input type="text" th:field="*{sn}"> </label><br/>
+        <input type="submit" value="Add User">
+    </form>
+</body>
+</html>

@@ -117,7 +117,8 @@
     "typeinfo": "cpp",
     "variant": "cpp",
     "cstdarg": "cpp",
-    "cinttypes": "cpp"
+    "cinttypes": "cpp",
+    "shared_mutex": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
