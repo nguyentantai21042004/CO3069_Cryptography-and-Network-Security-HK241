@@ -90,6 +90,7 @@ void generate_keys()
     if (!PemUtils::validate(user))
     {
         Logger::log("Main", "Failed to create new user with username: " + user);
+        return;
     }
 
     RSAOperations::generate_rsa_keys(user, keysize);

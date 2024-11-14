@@ -18,8 +18,8 @@ namespace PrimeUtils
         return 15;
     }
 
-    // Helper function: Checks if n is divisible by any small primes for quick elimination
-    bool is_divisible_by_small_primes(const mpz_class &n)
+    // Checks if n is divisible by any small primes for quick elimination
+    bool quick_test(const mpz_class &n)
     {
         static const int small_primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
         for (int prime : small_primes)
@@ -92,7 +92,7 @@ namespace PrimeUtils
         // Logger::log("PrimeUtils", "Checking primality of candidate: " + n.get_str());
 
         // Check divisibility by small primes first
-        if (is_divisible_by_small_primes(n))
+        if (quick_test(n))
         {
             Logger::log("PrimeUtils", "Candidate failed small prime divisibility test.");
             return false;
@@ -102,16 +102,12 @@ namespace PrimeUtils
         int rounds = calculate_miller_rabin_rounds(bit_length);
         bool miller_rabin_result = miller_rabin_test(n, rounds);
 
-        // Optionally use GMP's primality test as an additional check
-        int gmp_result = mpz_probab_prime_p(n.get_mpz_t(), 25); // 25 rounds for GMP test
-
-        if (miller_rabin_result && gmp_result > 0)
+        if (miller_rabin_result)
         {
             // Logger::log("PrimeUtils", "Candidate passed both Miller-Rabin and GMP tests and is prime.");
             return true;
         }
 
-        // Logger::log("PrimeUtils", "Candidate failed primality checks.");
         return false;
     }
 }
