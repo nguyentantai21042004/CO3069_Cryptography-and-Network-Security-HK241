@@ -1,9 +1,10 @@
-#include "PrimeUtils.h"
-#include "../Utils/Logger.h"
-#include "../Utils/RandomGenerator.h" // For generating random test numbers
+#include "primeUtils.h"
+#include "../utils/logger.h"
+#include "../utils/randomGenerator.h" // For generating random test numbers
 
 namespace PrimeUtils
 {
+    // Determine the number of Miller-Rabin rounds based on bit length
     int calculate_miller_rabin_rounds(int bit_length)
     {
         if (bit_length >= 2048)
@@ -35,8 +36,7 @@ namespace PrimeUtils
     // Miller-Rabin probabilistic primality test
     bool miller_rabin_test(const mpz_class &n, int rounds)
     {
-        // Logger::log("PrimeUtils", "Starting enhanced Miller-Rabin test.");
-
+        // Return false immediately for numbers <= 1, even numbers, and numbers 2 and 3
         if (n <= 1)
             return false;
         if (n == 2 || n == 3)
@@ -57,10 +57,10 @@ namespace PrimeUtils
         gmp_randclass rand_gen(gmp_randinit_default);
         rand_gen.seed(RandomGenerator::generate_random_number(32).get_ui());
 
-        // Perform the Miller-Rabin test rounds
+        // Perform the specified number of Miller-Rabin test rounds
         for (int i = 0; i < rounds; ++i)
         {
-            mpz_class a = rand_gen.get_z_range(n - 3) + 2; // Random a in [2, n-2]
+            mpz_class a = rand_gen.get_z_range(n - 3) + 2; // Random base a in [2, n-2]
             mpz_class x = RandomGenerator::mod_exp(a, d, n);
 
             if (x == 1 || x == n - 1)
@@ -78,28 +78,31 @@ namespace PrimeUtils
             }
             if (!passed)
             {
-                // Logger::log("PrimeUtils", "Failed Miller-Rabin test with base a = " + a.get_str());
+                Logger::log("PrimeUtils", "Failed Miller-Rabin test with base a = " + a.get_str());
                 return false;
             }
         }
-        // Logger::log("PrimeUtils", "Passed enhanced Miller-Rabin test.");
+        Logger::log("PrimeUtils", "Passed Miller-Rabin test for candidate.");
         return true;
     }
 
+    // Main function to check if a number is prime
     bool is_prime(const mpz_class &n, int bit_length)
     {
         // Logger::log("PrimeUtils", "Checking primality of candidate: " + n.get_str());
 
+        // Check divisibility by small primes first
         if (is_divisible_by_small_primes(n))
         {
-            // Logger::log("PrimeUtils", "Candidate failed small prime divisibility test.");
+            Logger::log("PrimeUtils", "Candidate failed small prime divisibility test.");
             return false;
         }
 
+        // Determine the number of Miller-Rabin rounds and perform the test
         int rounds = calculate_miller_rabin_rounds(bit_length);
         bool miller_rabin_result = miller_rabin_test(n, rounds);
 
-        // Optionally use GMP's primality test to double-check
+        // Optionally use GMP's primality test as an additional check
         int gmp_result = mpz_probab_prime_p(n.get_mpz_t(), 25); // 25 rounds for GMP test
 
         if (miller_rabin_result && gmp_result > 0)

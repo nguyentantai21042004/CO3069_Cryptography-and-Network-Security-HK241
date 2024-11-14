@@ -1,2 +1,0 @@
-/usr/bin/ar qc librsa_lib.a CMakeFiles/rsa_lib.dir/src/Core/PrimeUtils.cpp.o CMakeFiles/rsa_lib.dir/src/RSA/KeyGenerator.cpp.o CMakeFiles/rsa_lib.dir/src/RSA/RSAOperations.cpp.o CMakeFiles/rsa_lib.dir/src/Utils/Logger.cpp.o CMakeFiles/rsa_lib.dir/src/Utils/RandomGenerator.cpp.o
-/usr/bin/ranlib librsa_lib.a
