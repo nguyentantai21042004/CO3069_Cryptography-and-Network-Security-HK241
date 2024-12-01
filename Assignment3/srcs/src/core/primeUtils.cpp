@@ -8,13 +8,13 @@ namespace PrimeUtils
     int calculate_miller_rabin_rounds(int bit_length)
     {
         if (bit_length >= 2048)
-            return 40;
+            return 70;
         if (bit_length >= 1024)
-            return 30;
+            return 50;
         if (bit_length >= 512)
-            return 25;
+            return 40;
         if (bit_length >= 256)
-            return 20;
+            return 30;
         return 15;
     }
 
@@ -89,25 +89,30 @@ namespace PrimeUtils
     // Main function to check if a number is prime
     bool is_prime(const mpz_class &n, int bit_length)
     {
-        // Logger::log("PrimeUtils", "Checking primality of candidate: " + n.get_str());
-
-        // Check divisibility by small primes first
         if (quick_test(n))
         {
             Logger::log("PrimeUtils", "Candidate failed small prime divisibility test.");
             return false;
         }
 
-        // Determine the number of Miller-Rabin rounds and perform the test
         int rounds = calculate_miller_rabin_rounds(bit_length);
         bool miller_rabin_result = miller_rabin_test(n, rounds);
 
-        if (miller_rabin_result)
+        if (!miller_rabin_result)
         {
-            // Logger::log("PrimeUtils", "Candidate passed both Miller-Rabin and GMP tests and is prime.");
-            return true;
+            Logger::log("PrimeUtils", "Candidate failed Miller-Rabin test.");
+            return false;
         }
 
-        return false;
+        // Test with GMP's built-in primality test
+        int gmp_result = mpz_probab_prime_p(n.get_mpz_t(), 25);
+        if (gmp_result == 0)
+        {
+            Logger::log("PrimeUtils", "Candidate failed GMP primality test.");
+            return false;
+        }
+
+        Logger::log("PrimeUtils", "Candidate passed all primality tests.");
+        return true;
     }
 }

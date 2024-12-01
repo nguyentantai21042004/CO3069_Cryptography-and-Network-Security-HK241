@@ -11,6 +11,7 @@ void encrypt_message();
 void decrypt_message();
 void check_keys();
 void list_keys();
+void read_key();
 
 void display_menu()
 {
@@ -20,6 +21,7 @@ void display_menu()
     std::cout << "3. Decrypt Message\n";
     std::cout << "4. Check if Keys Exist\n";
     std::cout << "5. List All Keys\n";
+    std::cout << "6. Read Specific Key\n";
     std::cout << "0. Exit\n";
 }
 
@@ -63,6 +65,10 @@ int main()
         case 5:
             Logger::log("Main", "Listing all keys...");
             list_keys();
+            break;
+        case 6:
+            Logger::log("Main", "Reading specific key...");
+            read_key();
             break;
         case 0:
             exit_program = true;
@@ -276,4 +282,13 @@ void list_keys()
     {
         Logger::log("ListKeys", "Key listing completed.");
     }
+}
+
+// Read a specific key for a specified user
+void read_key()
+{
+    std::string user;
+    std::cout << "Enter username to read keys: ";
+    std::cin >> user;
+    PemUtils::read_key(user);
 }
