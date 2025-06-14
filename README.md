@@ -1,52 +1,76 @@
-# CO3069 - Cryptography and Network Security
+# RSA Encryption Implementation
 
-This repository contains the coursework for CO3069 - Cryptography and Network Security course. The project includes various labs and assignments focusing on different aspects of cryptography and network security.
+## Project Overview
+This project is part of the CO3069 - Cryptography and Network Security course at Ho Chi Minh City University of Technology (HCMUT). The implementation focuses on RSA encryption with a maximum key size of 1024 bits.
 
-## Course Structure
+## Features
+- RSA key generation (up to 1024 bits)
+- Message encryption and decryption
+- Digital signature generation and verification
+- Secure key storage and management
 
-The course is divided into several labs and assignments:
-
-### Labs
-- **Lab 1**: Introduction to Cryptography
-  - Exercise 1: Basic cryptographic concepts
-  - Exercise 2: Implementation of cryptographic algorithms
-- **Lab 2**: Symmetric Key Cryptography
-- **Lab 3**: Asymmetric Key Cryptography
-- **Lab 4**: Hash Functions and Digital Signatures
-- **Lab 5**: Network Security Protocols
-
-### Assignments
-- **Assignment 3**: Advanced cryptographic implementations
-
-## Project Organization
-
-Each lab directory contains:
-- Lab instructions (PDF/DOCX)
-- Source code implementations
-- Documentation and reports
-- Example files and resources
-
-## Getting Started
-
-1. Clone this repository:
-```bash
-git clone [repository-url]
+## Project Structure
+```
+src/
+├── bin/              # Compiled executables
+├── obj/              # Object files
+├── keys/             # Generated RSA keys
+├── signatures/       # Digital signatures
+├── encrypted_message/# Encrypted messages
+└── Makefile         # Build configuration
 ```
 
-2. Navigate to the specific lab or assignment directory you want to work on.
+## Requirements
+- C/C++ compiler (gcc/g++)
+- OpenSSL library
+- Make
 
-3. Follow the instructions in the respective lab's documentation.
+## Building the Project
+```bash
+cd src
+make
+```
 
-## Prerequisites
+## Usage
+1. Generate RSA keys:
+```bash
+./bin/keygen
+```
 
-- Basic understanding of cryptography concepts
-- Programming knowledge (Python/Java/C++)
-- Network security fundamentals
+2. Encrypt a message:
+```bash
+./bin/encrypt <message>
+```
 
-## Contributing
+3. Decrypt a message:
+```bash
+./bin/decrypt <encrypted_message>
+```
 
-This is a course project repository. Please follow the academic integrity guidelines of your institution when working with this material.
+4. Generate digital signature:
+```bash
+./bin/sign <message>
+```
+
+5. Verify digital signature:
+```bash
+./bin/verify <message> <signature>
+```
+
+## Security Notes
+- This implementation uses RSA with a maximum key size of 1024 bits
+- Keys are stored securely in the `keys/` directory
+- Encrypted messages are stored in the `encrypted_message/` directory
+- Digital signatures are stored in the `signatures/` directory
+
+## Course Information
+- Course: CO3069 - Cryptography and Network Security
+- Institution: Ho Chi Minh City University of Technology (HCMUT)
+- Semester: HK241
+
+## Author
+- Student ID: [Your Student ID]
+- Name: [Your Name]
 
 ## License
-
-This project is for educational purposes only. All rights reserved to the course instructors and the institution.
+This project is created for educational purposes as part of the course requirements.
